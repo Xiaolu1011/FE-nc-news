@@ -131,6 +131,10 @@ export default function ArticlePage() {
                   <time dateTime={comment.created_at}>
                     {formatDate(comment.created_at)}
                   </time>
+                  {" · "}
+                  <span className={styles.commentVotes}>
+                    <strong>Votes:</strong> {comment.votes}
+                  </span>
                 </p>
               </li>
             ))}
