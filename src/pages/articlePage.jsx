@@ -188,7 +188,6 @@ export default function ArticlePage() {
         <p className={styles.body}>{article.body}</p>
 
         <section className={styles.stats} aria-label="Article stats">
-          {}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Votes:</span>
 
@@ -219,7 +218,6 @@ export default function ArticlePage() {
             </div>
           </div>
 
-          {}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Comments:</span>
             <span className={styles.statValue}>
