@@ -146,3 +146,45 @@
 .commentVotes {
   color: #333;
 }
+
+.voteControls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.voteButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.voteButton:hover {
+  background: #eaeaea;
+}
+
+.voteButton:active {
+  transform: scale(0.95);
+}
+
+.voteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.statValue {
+  font-weight: 800;
+  font-size: 1.1rem;
+  min-width: 24px;
+  text-align: center;
+}

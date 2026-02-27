@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleById, getCommentsByArticleId } from "../api/ncNewsApi";
+import {
+  getArticleById,
+  getCommentsByArticleId,
+  patchArticleVotes,
+} from "../api/ncNewsApi";
 import styles from "./articlePage.module.css";
 
 function formatDate(iso) {
@@ -22,6 +26,10 @@ export default function ArticlePage() {
   const [comments, setComments] = useState([]);
   const [isCommentsLoading, setIsCommentsLoading] = useState(true);
   const [commentsError, setCommentsError] = useState(null);
+
+  const [voteDelta, setVoteDelta] = useState(0);
+  const [voteError, setVoteError] = useState(null);
+  const [isVoting, setIsVoting] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -49,6 +57,19 @@ export default function ArticlePage() {
         setIsCommentsLoading(false);
       });
   }, [article_id]);
+
+  function handleVote(inc) {
+    setVoteError(null);
+    setVoteDelta((curr) => curr + inc);
+    setIsVoting(true);
+
+    patchArticleVotes(article_id, inc)
+      .catch(() => {
+        setVoteDelta((curr) => curr - inc);
+        setVoteError("Vote failed. Please try again.");
+      })
+      .finally(() => setIsVoting(false));
+  }
 
   if (isLoading) return <p role="status">Loading article...</p>;
 
@@ -94,11 +115,38 @@ export default function ArticlePage() {
         <p className={styles.body}>{article.body}</p>
 
         <section className={styles.stats} aria-label="Article stats">
+          {/* Votes with optimistic controls */}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Votes:</span>
-            <span className={styles.statValue}>{article.votes}</span>
+
+            <div className={styles.voteControls}>
+              <button
+                type="button"
+                className={styles.voteButton}
+                onClick={() => handleVote(1)}
+                disabled={isVoting}
+                aria-label="Upvote article"
+              >
+                👍
+              </button>
+
+              <span className={styles.statValue} aria-live="polite">
+                {article.votes + voteDelta}
+              </span>
+
+              <button
+                type="button"
+                className={styles.voteButton}
+                onClick={() => handleVote(-1)}
+                disabled={isVoting}
+                aria-label="Downvote article"
+              >
+                👎
+              </button>
+            </div>
           </div>
 
+          {/* Comments count */}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Comments:</span>
             <span className={styles.statValue}>
@@ -106,6 +154,12 @@ export default function ArticlePage() {
             </span>
           </div>
         </section>
+
+        {voteError && (
+          <p className={styles.voteError} role="alert">
+            {voteError}
+          </p>
+        )}
 
         <section className={styles.commentsSection} aria-label="Comments">
           <h2 className={styles.commentsTitle}>Comments</h2>
