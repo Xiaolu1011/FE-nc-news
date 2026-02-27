@@ -61,7 +61,6 @@
   text-align: left;
 }
 
-/* Stats under the article */
 .stats {
   margin-top: 1.25rem;
   padding-top: 1rem;
@@ -90,7 +89,6 @@
   color: #111;
 }
 
-/* Comments */
 .commentsSection {
   margin-top: 1.5rem;
   padding-top: 1rem;
@@ -132,7 +130,6 @@
   font-size: 0.95rem;
 }
 
-/* Larger screens */
 @media (min-width: 768px) {
   .article {
     padding: 2rem;
@@ -187,4 +184,80 @@
   font-size: 1.1rem;
   min-width: 24px;
   text-align: center;
+}
+
+.commentForm {
+  margin: 1rem 0 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.commentLabel {
+  font-weight: 700;
+  color: #111;
+}
+
+.commentTextarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: none;
+}
+
+.commentTextarea:disabled {
+  opacity: 0.7;
+}
+
+.commentFormActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.commentSubmit {
+  border: 1px solid #ddd;
+  background: #111;
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.commentSubmit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.commentError {
+  margin: 0;
+  color: #b00020;
+  font-weight: 600;
+}
+
+.deleteButton {
+  margin-top: 0.5rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #b00020;
+  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background: #fff5f5;
+  border-color: #f0b6bf;
+}
+
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

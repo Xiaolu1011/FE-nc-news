@@ -4,6 +4,8 @@ import {
   getArticleById,
   getCommentsByArticleId,
   patchArticleVotes,
+  postCommentByArticleId,
+  deleteCommentById,
 } from "../api/ncNewsApi";
 import styles from "./articlePage.module.css";
 
@@ -30,6 +32,15 @@ export default function ArticlePage() {
   const [voteDelta, setVoteDelta] = useState(0);
   const [voteError, setVoteError] = useState(null);
   const [isVoting, setIsVoting] = useState(false);
+
+  const loggedInUser = "grumpy19";
+
+  const [newComment, setNewComment] = useState("");
+  const [isPostingComment, setIsPostingComment] = useState(false);
+  const [postCommentError, setPostCommentError] = useState(null);
+
+  const [deletingCommentIds, setDeletingCommentIds] = useState(new Set());
+  const [deleteCommentError, setDeleteCommentError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -69,6 +80,68 @@ export default function ArticlePage() {
         setVoteError("Vote failed. Please try again.");
       })
       .finally(() => setIsVoting(false));
+  }
+
+  function handleSubmitComment(e) {
+    e.preventDefault();
+
+    const trimmed = newComment.trim();
+    if (!trimmed) return;
+
+    setIsPostingComment(true);
+    setPostCommentError(null);
+
+    const tempComment = {
+      comment_id: `temp-${Date.now()}`,
+      author: loggedInUser,
+      body: trimmed,
+      created_at: new Date().toISOString(),
+      votes: 0,
+      isTemp: true,
+    };
+
+    setComments((curr) => [tempComment, ...curr]);
+    setNewComment("");
+
+    postCommentByArticleId(article_id, {
+      username: loggedInUser,
+      body: trimmed,
+    })
+      .then((savedComment) => {
+        setComments((curr) =>
+          curr.map((c) =>
+            c.comment_id === tempComment.comment_id ? savedComment : c,
+          ),
+        );
+      })
+      .catch(() => {
+        setComments((curr) =>
+          curr.filter((c) => c.comment_id !== tempComment.comment_id),
+        );
+        setNewComment(trimmed);
+        setPostCommentError("Failed to post comment. Please try again.");
+      })
+      .finally(() => setIsPostingComment(false));
+  }
+
+  function handleDeleteComment(comment_id) {
+    setDeleteCommentError(null);
+    setDeletingCommentIds((curr) => new Set(curr).add(comment_id));
+
+    deleteCommentById(comment_id)
+      .then(() => {
+        setComments((curr) => curr.filter((c) => c.comment_id !== comment_id));
+      })
+      .catch(() => {
+        setDeleteCommentError("Failed to delete comment. Please try again.");
+      })
+      .finally(() => {
+        setDeletingCommentIds((curr) => {
+          const copy = new Set(curr);
+          copy.delete(comment_id);
+          return copy;
+        });
+      });
   }
 
   if (isLoading) return <p role="status">Loading article...</p>;
@@ -115,7 +188,7 @@ export default function ArticlePage() {
         <p className={styles.body}>{article.body}</p>
 
         <section className={styles.stats} aria-label="Article stats">
-          {/* Votes with optimistic controls */}
+          {}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Votes:</span>
 
@@ -146,7 +219,7 @@ export default function ArticlePage() {
             </div>
           </div>
 
-          {/* Comments count */}
+          {}
           <div className={styles.stat}>
             <span className={styles.statLabel}>Comments:</span>
             <span className={styles.statValue}>
@@ -163,6 +236,39 @@ export default function ArticlePage() {
 
         <section className={styles.commentsSection} aria-label="Comments">
           <h2 className={styles.commentsTitle}>Comments</h2>
+
+          <form className={styles.commentForm} onSubmit={handleSubmitComment}>
+            <label className={styles.commentLabel} htmlFor="new-comment">
+              Add a comment
+            </label>
+
+            <textarea
+              id="new-comment"
+              className={styles.commentTextarea}
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Write your comment..."
+              rows={4}
+              disabled={isPostingComment}
+              required
+            />
+
+            <div className={styles.commentFormActions}>
+              <button
+                type="submit"
+                className={styles.commentSubmit}
+                disabled={isPostingComment || newComment.trim().length === 0}
+              >
+                {isPostingComment ? "Posting..." : "Post comment"}
+              </button>
+
+              {postCommentError && (
+                <p className={styles.commentError} role="alert">
+                  {postCommentError}
+                </p>
+              )}
+            </div>
+          </form>
 
           {isCommentsLoading && <p>Loading comments...</p>}
 
@@ -190,6 +296,24 @@ export default function ArticlePage() {
                     <strong>Votes:</strong> {comment.votes}
                   </span>
                 </p>
+                {comment.author === loggedInUser && (
+                  <button
+                    type="button"
+                    className={styles.deleteButton}
+                    onClick={() => handleDeleteComment(comment.comment_id)}
+                    disabled={deletingCommentIds.has(comment.comment_id)}
+                    aria-label="Delete your comment"
+                  >
+                    {deletingCommentIds.has(comment.comment_id)
+                      ? "Deleting..."
+                      : "Delete"}
+                  </button>
+                )}
+                {deleteCommentError && (
+                  <p className={styles.commentError} role="alert">
+                    {deleteCommentError}
+                  </p>
+                )}
               </li>
             ))}
           </ul>

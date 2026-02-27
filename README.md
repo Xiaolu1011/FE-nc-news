@@ -1,16 +1,122 @@
-# React + Vite
+# NC News Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React frontend application for the NC News API.
 
-Currently, two official plugins are available:
+This project allows users to browse a list of articles with key metadata including title, author, topic, votes, comment count, publication date, and article image.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Live Backend API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Hosted on Render:
 
-## Expanding the ESLint configuration
+https://backend-nc-news-seeding.onrender.com/api
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- React (Vite)
+- React Router
+- Axios
+- CSS Modules
+
+---
+
+## Features Implemented So Far
+
+- View all articles (`/articles`)
+- Article cards display:
+  - Title
+  - Author
+  - Topic
+  - Vote count
+  - Comment count
+  - Publication date
+  - Article image
+- Basic responsive card layout
+- Error handling for failed API requests
+- Loading state while fetching data
+
+---
+
+## Running Locally
+
+### 1. Clone the repository
+
+bash
+git clone <your-repo-url>
+cd nc-news
+
+### 2. Install dependencies
+
+npm install
+
+### 3. Create environment file
+
+Create a file in the root of the project called:
+.env.development
+Add:
+VITE_API_URL=https://backend-nc-news-seeding.onrender.com/api
+⚠️ This file is not committed to GitHub.
+
+### 4. Start development server
+
+npm run dev
+App will run at:
+http://localhost:5173
+
+---
+
+## Folder Structure (Current)
+
+src/
+components/
+articleCard.jsx
+articlesList.jsx
+pages/
+allArticlesPages.jsx
+api/
+ncNewsApi.js
+App.jsx
+main.jsx
+
+---
+
+## Planned Features
+
+View single article page
+Vote on articles (optimistic updates)
+View comments
+Post comments
+Delete comments
+Filter and sort articles
+Topic-based routing
+
+---
+
+### Backend Repository
+
+Backend project built with:
+Express
+PostgreSQL
+Supabase
+Hosted on Render
+
+---
+
+### Author
+
+Xiaolu - Built as part of the Northcoders Full Stack Bootcamp.
+
+---
+
+## Features
+
+- View a list of all articles
+- View an individual article via dynamic routing (`/articles/:article_id`)
+- Display article metadata (author, topic, date)
+- Display article votes and comment count
+- Fetch and display article comments
+- Loading and error handling states implemented
+- Mobile-first responsive layout

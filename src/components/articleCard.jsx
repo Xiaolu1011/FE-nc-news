@@ -1,4 +1,5 @@
 import styles from "./articleCard.module.css";
+import { Link } from "react-router-dom";
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -34,7 +35,11 @@ export default function ArticleCard({ article }) {
       )}
 
       <div className={styles.content}>
-        <h2 className={styles.title}>{title}</h2>
+        <h2 className={styles.title}>
+          <Link className={styles.link} to={`/articles/${article.article_id}`}>
+            {article.title}
+          </Link>
+        </h2>
 
         <p className={styles.meta}>
           <span>
