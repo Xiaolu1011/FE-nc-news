@@ -37,3 +37,7 @@ export function postCommentByArticleId(article_id, newComment) {
 export function deleteCommentById(comment_id) {
   return ncNewsApi.delete(`/comments/${comment_id}`);
 }
+
+export function getTopics() {
+  return ncNewsApi.get("/topics").then(({ data }) => data.topics);
+}
