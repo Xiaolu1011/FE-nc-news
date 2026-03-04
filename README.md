@@ -1,6 +1,6 @@
 # NC News Frontend
 
-## Deployed App
+## Deployed Frontend App
 
 https://nc-news-fe-zxl.netlify.app
 
@@ -9,6 +9,8 @@ https://nc-news-fe-zxl.netlify.app
 ## Project Overview
 
 NC News is a Reddit-style news aggregation application where users can browse, read and interact with articles.
+
+The project demonstrates full-stack development using a **React frontend** and a **Node / Express / PostgreSQL backend API**.
 
 Users can:
 
@@ -20,8 +22,6 @@ Users can:
 - View comments
 - Post new comments
 - Delete their own comments
-
-The project demonstrates full-stack development using a **React frontend** and a **Node / Express / PostgreSQL backend API**.
 
 ---
 
