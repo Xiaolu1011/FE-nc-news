@@ -50,6 +50,11 @@ Backend:
 - Express
 - PostgreSQL
 
+Testing
+
+- Jest
+- Supertest
+
 ---
 
 ## Minimum Node Version
@@ -128,6 +133,20 @@ http://localhost:5173
 - Filter articles by topic
 - Error handling
 - Responsive layout
+
+---
+
+## Future Improvements
+
+- Add user authentication
+- Improve UI design
+- Implement article search
+
+---
+
+## Author
+
+Xiaolu1011
 
 ---
 
