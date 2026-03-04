@@ -1,14 +1,35 @@
 # NC News Frontend
 
-A React frontend application for the NC News API.
+## Deployed App
 
-This project allows users to browse a list of articles with key metadata including title, author, topic, votes, comment count, publication date, and article image.
+https://nc-news-fe-zxl.netlify.app
 
 ---
 
-## Live Backend API
+## Project Overview
 
-Hosted on Render:
+NC News is a Reddit-style news aggregation application where users can browse, read and interact with articles.
+
+Users can:
+
+- View a list of articles
+- Sort articles by date, votes or comment count
+- Filter articles by topic
+- Read individual articles
+- Vote on articles
+- View comments
+- Post new comments
+- Delete their own comments
+
+The project demonstrates full-stack development using a **React frontend** and a **Node / Express / PostgreSQL backend API**.
+
+---
+
+## Backend Repository
+
+https://github.com/Xiaolu1011/backend-nc-news-seeding.git
+
+## Live Backend API:
 
 https://backend-nc-news-seeding.onrender.com/api
 
@@ -16,107 +37,100 @@ https://backend-nc-news-seeding.onrender.com/api
 
 ## Tech Stack
 
-- React (Vite)
+Frontend:
+
+- React
+- Vite
 - React Router
 - Axios
-- CSS Modules
+
+Backend:
+
+- Node.js
+- Express
+- PostgreSQL
 
 ---
 
-## Features Implemented So Far
+## Minimum Node Version
 
-- View all articles (`/articles`)
-- Article cards display:
-  - Title
-  - Author
-  - Topic
-  - Vote count
-  - Comment count
-  - Publication date
-  - Article image
-- Basic responsive card layout
-- Error handling for failed API requests
-- Loading state while fetching data
+Node.js version required:
+
+```
+Node.js v18 or higher
+```
+
+Check your version with:
+
+```
+node --version
+```
 
 ---
 
-## Running Locally
+## Running the Project Locally
 
 ### 1. Clone the repository
 
-bash
-git clone <your-repo-url>
-cd nc-news
+```
+git clone https://github.com/Xiaolu1011/FE-nc-news.git
+```
 
-### 2. Install dependencies
+### 2. Navigate into the project
 
+```
+cd FE-nc-news
+```
+
+### 3. Install dependencies
+
+```
 npm install
+```
 
-### 3. Create environment file
+### 4. Create environment file
 
-Create a file in the root of the project called:
-.env.development
-Add:
+Create a `.env.development` file:
+
+```
+VITE_API_URL=https://your-render-backend-url.onrender.com/api
+```
+
+Example:
+
+```
 VITE_API_URL=https://backend-nc-news-seeding.onrender.com/api
-⚠️ This file is not committed to GitHub.
+```
 
-### 4. Start development server
+### 5. Start the development server
 
+```
 npm run dev
-App will run at:
+```
+
+Then open:
+
+```
 http://localhost:5173
+```
 
 ---
 
-## Folder Structure (Current)
+## Features Implemented
 
-src/
-components/
-articleCard.jsx
-articlesList.jsx
-pages/
-allArticlesPages.jsx
-api/
-ncNewsApi.js
-App.jsx
-main.jsx
-
----
-
-## Planned Features
-
-View single article page
-Vote on articles (optimistic updates)
-View comments
-Post comments
-Delete comments
-Filter and sort articles
-Topic-based routing
+- View all articles
+- View individual articles
+- View comments
+- Post comments
+- Delete comments
+- Vote on articles (optimistic rendering)
+- Sort articles
+- Filter articles by topic
+- Error handling
+- Responsive layout
 
 ---
 
-### Backend Repository
+## Project Credits
 
-Backend project built with:
-Express
-PostgreSQL
-Supabase
-Hosted on Render
-
----
-
-### Author
-
-Xiaolu - Built as part of the Northcoders Full Stack Bootcamp.
-
----
-
-## Features
-
-- View a list of all articles
-- View an individual article via dynamic routing (`/articles/:article_id`)
-- Display article metadata (author, topic, date)
-- Display article votes and comment count
-- Fetch and display article comments
-- Loading and error handling states implemented
-- Mobile-first responsive layout
+This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/)
