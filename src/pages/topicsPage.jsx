@@ -24,6 +24,9 @@ export default function TopicsPage() {
         {error?.response?.data?.msg || "Failed to load topics"}
       </p>
     );
+  if (topics.length === 0) {
+    return <p>No topics available.</p>;
+  }
 
   return (
     <main style={{ padding: "1rem", maxWidth: 900, margin: "0 auto" }}>

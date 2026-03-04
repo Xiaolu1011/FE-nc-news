@@ -86,7 +86,10 @@ export default function ArticlePage() {
     e.preventDefault();
 
     const trimmed = newComment.trim();
-    if (!trimmed) return;
+    if (!trimmed) {
+      setPostCommentError("Please write a comment before submitting.");
+      return;
+    }
 
     setIsPostingComment(true);
     setPostCommentError(null);
@@ -147,8 +150,12 @@ export default function ArticlePage() {
   if (isLoading) return <p role="status">Loading article...</p>;
 
   if (error) {
-    const msg = error?.response?.data?.msg || "Failed to load article";
-    return <p role="alert">{msg}</p>;
+    const status = error?.response?.status;
+    const message =
+      status === 404
+        ? "This article does not exist."
+        : "Sorry, we couldn't load the article.";
+    return <p role="alert">{message}</p>;
   }
 
   if (!article) return <p role="alert">Article not found</p>;
